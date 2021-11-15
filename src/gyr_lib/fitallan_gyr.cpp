@@ -59,7 +59,7 @@ FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > t
     std::cout << " Bias Instability " << getBiasInstability( ) << " rad/s, at "
               << taus[findMinIndex( calcSimDeviation( taus ) )] << " s" << std::endl;
 
-    std::cout << " White Noise " << sqrt( freq ) * getN( ) * 60 / (180.0 / M_PI) << " rad/s" << std::endl;
+    std::cout << " White Noise " << sqrt( freq ) * getN( ) / (60 * (180.0 / M_PI)) << " rad/s" << std::endl;
     std::cout << " White Noise " << getWhiteNoise( ) << " rad/s" << std::endl;
 }
 
