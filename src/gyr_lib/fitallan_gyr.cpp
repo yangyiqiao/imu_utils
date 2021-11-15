@@ -55,11 +55,11 @@ FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > t
     //           << " " << K  //
     //           << " " << R << std::endl;
 
-    std::cout << " Bias Instability " << getB( ) / ( (180.0 / M_PI) * 3600 ) << " rad/s" << std::endl;
+    std::cout << " Bias Instability " << getB( ) << " rad/s" << std::endl;
     std::cout << " Bias Instability " << getBiasInstability( ) << " rad/s, at "
               << taus[findMinIndex( calcSimDeviation( taus ) )] << " s" << std::endl;
 
-    std::cout << " White Noise " << sqrt( freq ) * getN( ) / (60 * (180.0 / M_PI)) << " rad/s" << std::endl;
+    std::cout << " White Noise " << sqrt( freq ) * getN( ) << " rad/s" << std::endl;
     std::cout << " White Noise " << getWhiteNoise( ) << " rad/s" << std::endl;
 }
 
@@ -120,13 +120,13 @@ FitAllanGyr::calcSimDeviation( const std::vector< double > taus ) const
 double
 FitAllanGyr::getBiasInstability( ) const
 {
-    return findMinNum( calcSimDeviation( m_taus ) ) / ( (180.0 / M_PI) * 3600 );
+    return findMinNum( calcSimDeviation( m_taus ) );
 }
 
 double
 FitAllanGyr::getWhiteNoise( ) const
 {
-    return sqrt( freq ) * sqrt( calcSigma2( Q, N, B, K, R, 1 ) ) / ( (180.0 / M_PI) * 3600 );
+    return sqrt( freq ) * sqrt( calcSigma2( Q, N, B, K, R, 1 ) );
 }
 
 double
@@ -166,7 +166,7 @@ FitAllanGyr::calcSigma2( double _Q, double _N, double _B, double _K, double _R, 
 double
 FitAllanGyr::getN( ) const
 {
-    return sqrt( N * N ) / 60.0;
+    return sqrt( N * N );
 }
 
 double
@@ -178,17 +178,17 @@ FitAllanGyr::getB( ) const
 double
 FitAllanGyr::getK( ) const
 {
-    return 60.0 * sqrt( 3.0 * K * K );
+    return sqrt( 3.0 * K * K );
 }
 
 double
 FitAllanGyr::getR( ) const
 {
-    return 3600.0 * sqrt( 2.0 * R * R );
+    return sqrt( 2.0 * R * R );
 }
 
 double
 FitAllanGyr::getQ( ) const
 {
-    return sqrt( Q * Q ) / ( 3600.0 * sqrt( 3.0 ) );
+    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
 }

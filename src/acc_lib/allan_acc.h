@@ -14,8 +14,6 @@ class AllanAcc
     public:
     AllanAcc( std::string name, int maxCluster = 10000 );
     ~AllanAcc( );
-    void pushRadPerSec( double data, double time );
-    void pushDegreePerSec( double data, double time );
     void pushMPerSec2( double data, double time );
     void calc( );
 

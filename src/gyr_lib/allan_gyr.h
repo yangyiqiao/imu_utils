@@ -15,8 +15,6 @@ class AllanGyr
     AllanGyr( std::string name, int maxCluster = 10000 );
     ~AllanGyr( );
     void pushRadPerSec( double data, double time );
-    void pushDegreePerSec( double data, double time );
-    void pushDegreePerHou( double data, double time );
     void calc( );
 
     std::vector< double > getVariance( ) const;

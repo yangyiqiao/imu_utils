@@ -19,20 +19,6 @@ imu::AllanGyr::~AllanGyr( )
 void
 imu::AllanGyr::pushRadPerSec( double data, double time )
 {
-    m_rawData.push_back( GyrData( data * (180.0 / M_PI) * 3600, time ) );
-    numData++;
-}
-
-void
-imu::AllanGyr::pushDegreePerSec( double data, double time )
-{
-    m_rawData.push_back( GyrData( data * 3600, time ) );
-    numData++;
-}
-
-void
-imu::AllanGyr::pushDegreePerHou( double data, double time )
-{
     m_rawData.push_back( GyrData( data, time ) );
     numData++;
 }
@@ -54,9 +40,7 @@ imu::AllanGyr::calc( )
               << " end_t " << end_t << std::endl;
     std::cout << m_name << " "
               << "dt " << std::endl //
-              << "-------------" << ( end_t - start_t ) << " s" << std::endl
-              << "-------------" << ( end_t - start_t ) / 60 << " min" << std::endl
-              << "-------------" << ( end_t - start_t ) / 3600 << " h" << std::endl;
+              << "-------------" << ( end_t - start_t ) << " s" << std::endl;
 
     if ( ( end_t - start_t ) / 60 < 10 )
         std::cout << m_name << " "

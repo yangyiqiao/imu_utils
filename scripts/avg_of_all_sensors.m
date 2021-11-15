@@ -16,7 +16,7 @@ figure
 loglog(dt, data_draw , 'r+');
 % loglog(dt, data_sim_draw , '-');
 xlabel('time:sec');                
-ylabel('Sigma:deg/h');             
+ylabel('Sigma:rad/s');             
 % legend('x','y','z');      
 grid on;                           
 hold on;                           

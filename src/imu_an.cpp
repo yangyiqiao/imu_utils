@@ -259,17 +259,17 @@ main( int argc, char** argv )
 
     std::cout << "Gyro X " << std::endl;
     imu::FitAllanGyr fit_gyr_x( gyro_v_x, gyro_ts_x, gyr_x->getFreq( ) );
-    std::cout << "  bias " << gyr_x->getAvgValue( ) / 3600 << " degree/s" << std::endl;
+    std::cout << "  bias " << gyr_x->getAvgValue( ) << " rad/s" << std::endl;
     std::cout << "-------------------" << std::endl;
 
     std::cout << "Gyro y " << std::endl;
     imu::FitAllanGyr fit_gyr_y( gyro_v_y, gyro_ts_y, gyr_y->getFreq( ) );
-    std::cout << "  bias " << gyr_y->getAvgValue( ) / 3600 << " degree/s" << std::endl;
+    std::cout << "  bias " << gyr_y->getAvgValue( ) << " rad/s" << std::endl;
     std::cout << "-------------------" << std::endl;
 
     std::cout << "Gyro z " << std::endl;
     imu::FitAllanGyr fit_gyr_z( gyro_v_z, gyro_ts_z, gyr_z->getFreq( ) );
-    std::cout << "  bias " << gyr_z->getAvgValue( ) / 3600 << " degree/s" << std::endl;
+    std::cout << "  bias " << gyr_z->getAvgValue( ) << " rad/s" << std::endl;
     std::cout << "-------------------" << std::endl;
 
     std::vector< double > gyro_sim_d_x = fit_gyr_x.calcSimDeviation( gyro_ts_x );
