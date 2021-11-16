@@ -164,6 +164,12 @@ FitAllanGyr::calcSigma2( double _Q, double _N, double _B, double _K, double _R, 
 }
 
 double
+FitAllanGyr::getQ( ) const
+{
+    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
+}
+
+double
 FitAllanGyr::getN( ) const
 {
     return sqrt( N * N );
@@ -185,10 +191,4 @@ double
 FitAllanGyr::getR( ) const
 {
     return sqrt( 2.0 * R * R );
-}
-
-double
-FitAllanGyr::getQ( ) const
-{
-    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
 }

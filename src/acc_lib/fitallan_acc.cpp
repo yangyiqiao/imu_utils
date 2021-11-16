@@ -192,6 +192,12 @@ FitAllanAcc::calcSigma2( double _Q, double _N, double _B, double _K, double _R, 
 }
 
 double
+FitAllanAcc::getQ( ) const
+{
+    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
+}
+
+double
 FitAllanAcc::getN( ) const
 {
     return sqrt( N * N );
@@ -213,10 +219,4 @@ double
 FitAllanAcc::getR( ) const
 {
     return sqrt( 2.0 * R * R );
-}
-
-double
-FitAllanAcc::getQ( ) const
-{
-    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
 }
