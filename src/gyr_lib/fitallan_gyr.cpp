@@ -172,7 +172,7 @@ FitAllanGyr::getN( ) const
 double
 FitAllanGyr::getB( ) const
 {
-    return sqrt( B * B ) / 0.6642824703;
+    return sqrt(B * B * M_PI / (2 * log(2)));
 }
 
 double
