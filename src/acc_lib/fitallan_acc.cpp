@@ -97,7 +97,7 @@ FitAllanAcc::initValue( std::vector< double > sigma2s, std::vector< double > tau
     //        std::cout << "A " << A << std::endl;
 
     Eigen::MatrixXd C = A.inverse( ) * B;
-    std::cout << "C " << C.transpose( ) << std::endl;
+    // std::cout << "C " << C.transpose( ) << std::endl;
 
     std::vector< double > init;
     for ( int index = 0; index < 2 * m_order + 1; ++index )
