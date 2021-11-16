@@ -14,8 +14,8 @@ class FitAllanGyr
     {
         public:
         AllanSigmaError( const double& _sigma2, const double& _tau )
-        : sigma2( _sigma2 )
-        , tau( _tau )
+        : sigma2_(_sigma2 )
+        , tau_(_tau )
         {
         }
 
@@ -26,41 +26,41 @@ class FitAllanGyr
         }
 
         template< typename T >
-        T calcSigma2( T _Q, T _N, T _B, T _K, T _R, T _tau ) const
+        T calcSigma2(T C_Q, T C_N, T C_B, T C_K, T C_R, T tau ) const
         {
             // clang-format off
-            return  _Q * _Q / ( _tau * _tau )
-                  + _N * _N / _tau
-                  + _B * _B
-                  + _K * _K * _tau
-                  + _R * _R * _tau * _tau;
+            return  C_Q * C_Q / ( tau * tau )
+                  + C_N * C_N / tau
+                  + C_B * C_B
+                  + C_K * C_K * tau
+                  + C_R * C_R * tau * tau;
             // clang-format on
         }
 
         template< typename T >
         bool operator( )( const T* const _paramt, T* residuals ) const
         {
-            T _Q   = T( _paramt[0] );
-            T _N   = T( _paramt[1] );
-            T _B   = T( _paramt[2] );
-            T _K   = T( _paramt[3] );
-            T _R   = T( _paramt[4] );
-            T _tau = T( tau );
+            T C_Q   = T(_paramt[0] );
+            T C_N   = T(_paramt[1] );
+            T C_B   = T(_paramt[2] );
+            T C_K   = T(_paramt[3] );
+            T C_R   = T(_paramt[4] );
+            T tau   = T(tau_ );
 
-            T _sigma2    = calcSigma2( _Q, _N, _B, _K, _R, _tau );
-            T _dsigma2   = T( calcLog10( _sigma2 ) ) - T( calcLog10( sigma2 ) );
-            residuals[0] = _dsigma2;
-            // std::cout << "_err " << T( sigma2 ) << " " << _sigma2 << std::endl;
+            T sigma2     = calcSigma2(C_Q, C_N, C_B, C_K, C_R, tau );
+            T dsigma2    = T(calcLog10(sigma2 ) ) - T(calcLog10(sigma2_ ) );
+            residuals[0] = dsigma2;
+            // std::cout << "_err " << T( sigma2_ ) << " " << sigma2 << std::endl;
 
             return true;
         }
 
-        double sigma2;
-        double tau;
+        double sigma2_;
+        double tau_;
     };
 
     public:
-    FitAllanGyr( std::vector< double > sigma2s, std::vector< double > taus, double _freq );
+    FitAllanGyr( std::vector< double > sigma2s, std::vector< double > taus, double freq );
     std::vector< double > calcSimDeviation( const std::vector< double > taus ) const;
     double getBiasInstability( ) const;
     double getWhiteNoise( ) const;
@@ -69,9 +69,10 @@ class FitAllanGyr
     std::vector< double > initValue( std::vector< double > sigma2s, std::vector< double > taus );
     double findMinNum( const std::vector< double > num ) const;
     int findMinIndex( std::vector< double > num );
-    double calcSigma2( double _Q, double _N, double _B, double _K, double _R, double _tau ) const;
+    double calcSigma2(double C_Q, double C_N, double C_B, double C_K, double C_R, double tau ) const;
 
     public:
+
     /**
      * @brief getQ
      *          Quantization Noise
@@ -79,6 +80,7 @@ class FitAllanGyr
      * @return
      */
     double getQ( ) const;
+
     /**
      * @brief getN
      *          Angle Random Walk
@@ -86,6 +88,7 @@ class FitAllanGyr
      * @return
      */
     double getN( ) const;
+
     /**
      * @brief getB
      *        Bias Instability
@@ -93,6 +96,7 @@ class FitAllanGyr
      * @return
      */
     double getB( ) const;
+
     /**
      * @brief getK
      *      Rate Random Walk
@@ -100,6 +104,7 @@ class FitAllanGyr
      * @return
      */
     double getK( ) const;
+
     /**
      * @brief getR
      *        Angle Rate Ramp
@@ -108,15 +113,15 @@ class FitAllanGyr
      */
     double getR( ) const;
 
-    double Q;
-    double N;
-    double B;
-    double K;
-    double R;
+    double C_Q_;
+    double C_N_;
+    double C_B_;
+    double C_K_;
+    double C_R_;
 
     private:
     std::vector< double > m_taus;
-    double freq;
+    double freq_;
 };
 }
 #endif // FitAllanGyr_H

@@ -48,7 +48,7 @@ imu::AllanAcc::calc( )
 
     m_freq = getAvgFreq( );
     std::cout << m_name << " "
-              << " freq " << m_freq << std::endl;
+              << " freq_ " << m_freq << std::endl;
 
     double period = getAvgPeriod( );
     std::cout << m_name << " "
@@ -126,13 +126,13 @@ imu::AllanAcc::calcVariance( double period )
             sigma2[i] += ( temp * temp );
         }
 
-        //            std::cout << "sigma2 " << sigma2[i] << std::endl;
+        //            std::cout << "sigma2_ " << sigma2_[i] << std::endl;
         sigma2[i] = sigma2[i] / divided;
     }
 
     //        for ( int index = 0; index < mVariance.size( ); ++index )
     //        {
-    //            std::cout << sigma2[index] << std::endl;
+    //            std::cout << sigma2_[index] << std::endl;
     //        }
     return sigma2;
 }

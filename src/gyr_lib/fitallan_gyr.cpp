@@ -2,13 +2,13 @@
 
 using namespace imu;
 
-FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > taus, double _freq )
-: Q( 0.0 )
-, N( 0.0 )
-, B( 0.0 )
-, K( 0.0 )
-, R( 0.0 )
-, freq( _freq )
+FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > taus, double freq )
+: C_Q_(0.0 )
+, C_N_(0.0 )
+, C_B_(0.0 )
+, C_K_(0.0 )
+, C_R_(0.0 )
+, freq_(freq )
 {
     if ( sigma2s.size( ) != taus.size( ) )
         std::cerr << "Error of point size" << std::endl;
@@ -18,7 +18,6 @@ FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > t
     std::vector< double > init = initValue( sigma2s, taus );
 
     int num_samples = sigma2s.size( );
-    //    double param[]  = { Q, N, B, K, R };
     double param[] = { init[0], init[1], init[2], init[3], init[4] };
 
     ceres::Problem problem;
@@ -43,23 +42,23 @@ FitAllanGyr::FitAllanGyr( std::vector< double > sigma2s, std::vector< double > t
     //        std::cout << summary.FullReport( ) << "\n";
     //    std::cout << "num_parameters " << summary.num_parameters << std::endl;
 
-    Q = param[0];
-    N = param[1];
-    B = param[2];
-    K = param[3];
-    R = param[4];
+    C_Q_ = param[0];
+    C_N_ = param[1];
+    C_B_ = param[2];
+    C_K_ = param[3];
+    C_R_ = param[4];
 
-    // std::cout << "Q " << Q //
-    //           << " " << N  //
-    //           << " " << B  //
-    //           << " " << K  //
-    //           << " " << R << std::endl;
+    // std::cout << "C_Q_ " << C_Q_ //
+    //           << " " << C_N_  //
+    //           << " " << C_B_  //
+    //           << " " << C_K_  //
+    //           << " " << C_R_ << std::endl;
 
     std::cout << " Bias Instability " << getB( ) << " rad/s" << std::endl;
     std::cout << " Bias Instability " << getBiasInstability( ) << " rad/s, at "
               << taus[findMinIndex( calcSimDeviation( taus ) )] << " s" << std::endl;
 
-    std::cout << " White Noise " << sqrt( freq ) * getN( ) << " rad/s" << std::endl;
+    std::cout << " White Noise " << sqrt(freq_ ) * getN( ) << " rad/s" << std::endl;
     std::cout << " White Noise " << getWhiteNoise( ) << " rad/s" << std::endl;
 }
 
@@ -113,7 +112,7 @@ FitAllanGyr::calcSimDeviation( const std::vector< double > taus ) const
 {
     std::vector< double > des;
     for ( auto& tau : taus )
-        des.push_back( sqrt( calcSigma2( Q, N, B, K, R, tau ) ) );
+        des.push_back( sqrt( calcSigma2(C_Q_, C_N_, C_B_, C_K_, C_R_, tau ) ) );
     return des;
 }
 
@@ -126,7 +125,7 @@ FitAllanGyr::getBiasInstability( ) const
 double
 FitAllanGyr::getWhiteNoise( ) const
 {
-    return sqrt( freq ) * sqrt( calcSigma2( Q, N, B, K, R, 1 ) );
+    return sqrt(freq_ ) * sqrt(calcSigma2(C_Q_, C_N_, C_B_, C_K_, C_R_, 1 ) );
 }
 
 double
@@ -152,43 +151,43 @@ FitAllanGyr::findMinIndex( std::vector< double > num )
 }
 
 double
-FitAllanGyr::calcSigma2( double _Q, double _N, double _B, double _K, double _R, double _tau ) const
+FitAllanGyr::calcSigma2(double C_Q, double C_N, double C_B, double C_K, double C_R, double tau ) const
 {
     // clang-format off
-  return  _Q * _Q / ( _tau * _tau )
-      + _N * _N / _tau
-      + _B * _B
-      + _K * _K * _tau
-      + _R * _R * _tau * _tau;
+  return  C_Q * C_Q / ( tau * tau )
+      + C_N * C_N / tau
+      + C_B * C_B
+      + C_K * C_K * tau
+      + C_R * C_R * tau * tau;
     // clang-format on
 }
 
 double
 FitAllanGyr::getQ( ) const
 {
-    return sqrt( Q * Q ) / ( sqrt( 3.0 ) );
+    return sqrt(C_Q_ * C_Q_ ) / ( sqrt(3.0 ) );
 }
 
 double
 FitAllanGyr::getN( ) const
 {
-    return sqrt( N * N );
+    return sqrt(C_N_ * C_N_ );
 }
 
 double
 FitAllanGyr::getB( ) const
 {
-    return sqrt(B * B * M_PI / (2 * log(2)));
+    return sqrt(C_B_ * C_B_ * M_PI / (2 * log(2)));
 }
 
 double
 FitAllanGyr::getK( ) const
 {
-    return sqrt( 3.0 * K * K );
+    return sqrt( 3.0 * C_K_ * C_K_ );
 }
 
 double
 FitAllanGyr::getR( ) const
 {
-    return sqrt( 2.0 * R * R );
+    return sqrt( 2.0 * C_R_ * C_R_ );
 }
