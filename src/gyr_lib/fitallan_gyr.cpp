@@ -132,7 +132,7 @@ FitAllanGyr::getBiasInstability( ) const
 double
 FitAllanGyr::getWhiteNoise( ) const
 {
-    return sqrt(freq_ ) * getN( );
+    return getN( ) / sqrt(freq_);
 }
 
 double

@@ -134,7 +134,7 @@ FitAllanAcc::getBiasInstability( ) const
 double
 FitAllanAcc::getWhiteNoise( ) const
 {
-    return sqrt(freq_ ) * getN( );
+    return getN( ) / sqrt(freq_);
 }
 
 double
