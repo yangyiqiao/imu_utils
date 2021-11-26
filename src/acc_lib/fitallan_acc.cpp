@@ -64,10 +64,6 @@ FitAllanAcc::FitAllanAcc( std::vector< double > sigma2s, std::vector< double > t
     //std::cout << "Bias Instability   (B): " << getBiasInstability( ) << R"( m / s^2, at )" << taus[findMinIndex( calcSimDeviation( taus ) )] << " s" << std::endl;
     std::cout << "Accel. Random Walk (K): " << getK( ) << R"( m / (s^2 * sqrt(s))  # Kalibr: \sigma_{bg}, Gyroscope "random walk", gyroscope_random_walk)" << std::endl;
     std::cout << "Acceleration Ramp  (R): " << getR( ) << R"( m / s^3)" << std::endl;
-    std::cout << std::endl;
-    std::cout << "### Discrete-time standard deviations at sample rate of " << freq_ << " Hz" << std::endl;
-    std::cout << "sigma_w " << getWhiteNoise( ) << " m/s^2" << std::endl;
-    std::cout << "sigma_b " << getRandomWalk() << " m/s^3" << std::endl;
     std::cout << "================================================================== " << std::endl;
 }
 
@@ -129,18 +125,6 @@ double
 FitAllanAcc::getBiasInstability( ) const
 {
     return findMinNum( calcSimDeviation( m_taus ) );
-}
-
-double
-FitAllanAcc::getWhiteNoise( ) const
-{
-    return getN( ) / sqrt(freq_);
-}
-
-double
-FitAllanAcc::getRandomWalk( ) const
-{
-    return sqrt(freq_ ) * getK();
 }
 
 std::vector< double >

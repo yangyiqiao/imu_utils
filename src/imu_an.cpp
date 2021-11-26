@@ -134,33 +134,33 @@ writeYAML( const std::string data_path,
     fs << "Gyr";
     fs << "{";
     fs << "unit"
-       << " rad/s";
+       << "gyr_n: rad / sqrt(s), gyr_w: rad / s^2 / sqrt(Hz)";
 
     fs << "avg-axis";
     fs << "{";
     fs << std::string( "gyr_n" )
-       << ( gyr_x.getWhiteNoise( ) + gyr_y.getWhiteNoise( ) + gyr_z.getWhiteNoise( ) ) / 3;
+       << ( gyr_x.getN( ) + gyr_y.getN( ) + gyr_z.getN( ) ) / 3;
     fs << std::string( "gyr_w" )
-       << ( gyr_x.getBiasInstability( ) + gyr_y.getBiasInstability( ) + gyr_z.getBiasInstability( ) ) / 3;
+       << ( gyr_x.getK( ) + gyr_y.getK( ) + gyr_z.getK( ) ) / 3;
 
     fs << "}";
 
     fs << "x-axis";
     fs << "{";
-    fs << std::string( "gyr_n" ) << gyr_x.getWhiteNoise( );
-    fs << std::string( "gyr_w" ) << gyr_x.getBiasInstability( );
+    fs << std::string( "gyr_n" ) << gyr_x.getN( );
+    fs << std::string( "gyr_w" ) << gyr_x.getK( );
     fs << "}";
 
     fs << "y-axis";
     fs << "{";
-    fs << std::string( "gyr_n" ) << gyr_y.getWhiteNoise( );
-    fs << std::string( "gyr_w" ) << gyr_y.getBiasInstability( );
+    fs << std::string( "gyr_n" ) << gyr_y.getN( );
+    fs << std::string( "gyr_w" ) << gyr_y.getK( );
     fs << "}";
 
     fs << "z-axis";
     fs << "{";
-    fs << std::string( "gyr_n" ) << gyr_z.getWhiteNoise( );
-    fs << std::string( "gyr_w" ) << gyr_z.getBiasInstability( );
+    fs << std::string( "gyr_n" ) << gyr_z.getN( );
+    fs << std::string( "gyr_w" ) << gyr_z.getK( );
     fs << "}";
 
     fs << "}";
@@ -168,32 +168,32 @@ writeYAML( const std::string data_path,
     fs << "Acc";
     fs << "{";
     fs << "unit"
-       << " m/s^2";
+       << "acc_n: m / s^2 / sqrt(Hz), acc_w: m / s^3 / sqrt(Hz)";
 
     fs << "avg-axis";
     fs << "{";
     fs << std::string( "acc_n" )
-       << ( acc_x.getWhiteNoise( ) + acc_y.getWhiteNoise( ) + acc_z.getWhiteNoise( ) ) / 3;
+       << ( acc_x.getN( ) + acc_y.getN( ) + acc_z.getN( ) ) / 3;
     fs << std::string( "acc_w" )
-       << ( acc_x.getBiasInstability( ) + acc_y.getBiasInstability( ) + acc_z.getBiasInstability( ) ) / 3;
+       << ( acc_x.getK( ) + acc_y.getK( ) + acc_z.getK( ) ) / 3;
     fs << "}";
 
     fs << "x-axis";
     fs << "{";
-    fs << std::string( "acc_n" ) << acc_x.getWhiteNoise( );
-    fs << std::string( "acc_w" ) << acc_x.getBiasInstability( );
+    fs << std::string( "acc_n" ) << acc_x.getN( );
+    fs << std::string( "acc_w" ) << acc_x.getK( );
     fs << "}";
 
     fs << "y-axis";
     fs << "{";
-    fs << std::string( "acc_n" ) << acc_y.getWhiteNoise( );
-    fs << std::string( "acc_w" ) << acc_y.getBiasInstability( );
+    fs << std::string( "acc_n" ) << acc_y.getN( );
+    fs << std::string( "acc_w" ) << acc_y.getK( );
     fs << "}";
 
     fs << "z-axis";
     fs << "{";
-    fs << std::string( "acc_n" ) << acc_z.getWhiteNoise( );
-    fs << std::string( "acc_w" ) << acc_z.getBiasInstability( );
+    fs << std::string( "acc_n" ) << acc_z.getN( );
+    fs << std::string( "acc_w" ) << acc_z.getK( );
     fs << "}";
 
     fs << "}";
